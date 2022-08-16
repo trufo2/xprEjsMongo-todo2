@@ -1,62 +1,44 @@
-// *********************************
-// Enabling Enviromental Variables
-// *********************************
 import dotenv from "dotenv"
 dotenv.config()
-
-// *********************************
-// Import Dependencies
-// *********************************
 import express from "express"
 import methodOverride from "method-override"
 import cors from "cors"
 import morgan from "morgan"
+import mongoose from "mongoose"
 import MainController from "./controllers/MainController.js"
 import APIController from "./controllers/APIController.js"
 
-// *********************************
-// Global Variables & Controller Instantiation
-// *********************************
 const PORT = process.env.PORT || 8088
+const MONGO_URI = process.env.MONGO_URI
 const mainController = new MainController()
 const apiController = new APIController()
-
-// *********************************
-// Creating Application Object
-// *********************************
-const app = express()
-
-// *********************************
-// Routers
-// *********************************
+mongoose.connect(MONGO_URI)
+mongoose.connection.on('open', () => console.log('connected'))
+.on('close', () => console.log('disconnected'))
+.on('error', (er) => console.log(er))
+const app = express(MONGO_URI)
 const MainRoutes = express.Router()
 const APIRoutes = express.Router()
+const TodoSchema = new mongoose.Schema({
+  message: String,
+  completed: Boolean
+})
+const Todo = mongoose.model("Todo", TodoSchema)
 
-// *********************************
-// Middleware
-// *********************************
-// Global Middleware
 app.use(express.urlencoded({extended: true}))
 app.use(express.json())
 app.use(methodOverride("_method"))
 app.use("/static", express.static("static"))
 app.use(morgan("tiny"))
+app.use((req,res,next) => {
+  req.models = {
+    Todo
+  }
+  next()
+})
 app.use("/", MainRoutes)
 app.use("/api", APIRoutes)
-// Router Specific Middleware
 APIRoutes.use(cors())
-
-// *********************************
-// Routes that Render Pages with EJS
-// *********************************
-MainRoutes.get("/", mainController.example) // "/"
-
-// *********************************
-// API Routes that Return JSON
-// *********************************
-APIRoutes.get("/", apiController.example) //"/api"
-
-// *********************************
-// Server Listener
-// *********************************
+MainRoutes.get("/", mainController.example)
+APIRoutes.get("/", apiController.example)
 app.listen(PORT, () => console.log(`👂Listening on Port ${PORT}👂`))
