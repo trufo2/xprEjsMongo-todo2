@@ -8,7 +8,7 @@ import mongoose from "mongoose"
 import MainController from "./controllers/MainController.js"
 import APIController from "./controllers/APIController.js"
 
-const PORT = process.env.PORT || 8088
+const PORT = process.env.PORT || 5000
 const MONGO_URI = process.env.MONGO_URI
 const mainController = new MainController()
 const apiController = new APIController()
