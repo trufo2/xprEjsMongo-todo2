@@ -1,12 +1,12 @@
 class APIController {
-    
-    example(req, res){
-        res.json({
-            text: "This is an example API Route"
+    getTodos(req, res){
+        req.models.Todo.find({}, (er, todos) => {
+            if (er) {
+                res.status(400).send(er)
+            } else {
+                res.json(todos)
+            }
         })
     }
-
-
 }
-
 export default APIController

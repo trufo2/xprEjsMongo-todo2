@@ -1,7 +1,7 @@
 class MainController {
     index(req, res){
         const Todo = req.models.Todo
-        Todo.find({}, (er, todos) => {
+        Todo.find({username: req.session.username}, (er, todos) => {
             if (er) {
                 res.status(400).send(er)
             } else {
@@ -15,11 +15,12 @@ class MainController {
     create(req, res){
         const Todo = req.models.Todo
         req.body.completed = false
+        req.body.username = req.session.username
         Todo.create(req.body, (er, todo) => {
             if (er) {
                 res.status(400).send(er)
             } else {
-                res.redirect("/")
+                res.redirect("/todo")
             }
         })
     }
@@ -41,7 +42,7 @@ class MainController {
             if (er) {
                 res.status(400).send(er)
             } else {
-                res.redirect("/")
+                res.redirect("/todo")
             }
         })
     }
@@ -52,7 +53,7 @@ class MainController {
             if (er) {
                 res.status(400).send(er)
             } else {
-                res.redirect("/")
+                res.redirect("/todo")
             }
         })
     }

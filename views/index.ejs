@@ -2,6 +2,9 @@
 <%- include("partials/header.ejs") %>
 <main>
     <h1>Tadaaa!!!</h1>
+    <form action="/logout" method="post">
+      <input type="submit" value="logout"/>
+    </form>
     <a href="/todo/new">
       <button>
         Create todo
