@@ -1,10 +1,8 @@
-# Express Template
-
-### By Alex Merced (AlexMercedCoder.com)
+# Express/ejs/mongoDB todo app
 
 ## Setup
 
-- create new project by clicking the template button on the main github repo for this template or by running command `npx degit Alex-Merced-Templates/oop-express-template` in an empty folder
+- create new project by clicking the template button on the main github repo for this template or by running command `npx degit trufo2/xprEjsMongo-todo2` in an empty folder
 - clone the new project from github
 - run `npm install` from the main folder (the one with package.json)
 - rename the `template.env` file to `.env`
@@ -33,5 +31,3 @@ For both, look at the examples in the existing code.
 An example EJS file making use of the head, header and footer partials already exists, you can use that to copy over to other pages.
 
 - The head.ejs already has the /static/css/styles.css file and the /static/js/app.js files already configured along with jQuery.
-
-Enjoy!
